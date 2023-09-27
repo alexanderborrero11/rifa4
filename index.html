@@ -1,0 +1,64 @@
+import 'dart:io';
+
+class RaffleApp {
+  Map<int, String> raffleNumbers = {};
+  Map<int, Map<String, String>> userEntries = {};
+
+  void start() {
+    while (true) {
+      print('Bienvenido a la Rifa!');
+      print('1. Seleccionar un número');
+      print('2. Salir');
+      var choice = int.parse(stdin.readLineSync()!);
+
+      switch (choice) {
+        case 1:
+          selectNumber();
+          break;
+        case 2:
+          exit(0);
+          break;
+        default:
+          print('Opción no válida. Inténtalo de nuevo.');
+      }
+    }
+  }
+
+  void selectNumber() {
+    print('Selecciona un número del 00 al 99:');
+    var number = int.parse(stdin.readLineSync()!);
+
+    if (number < 0 || number > 99) {
+      print('Número no válido. Inténtalo de nuevo.');
+      return;
+    }
+
+    if (raffleNumbers.containsKey(number)) {
+      print('Este número ya ha sido seleccionado. Inténtalo de nuevo.');
+      return;
+    }
+
+    print('Introduce tu número de teléfono:');
+    var phoneNumber = stdin.readLineSync()!;
+    print('Introduce tu correo electrónico:');
+    var email = stdin.readLineSync()!;
+    print('Introduce tu nombre completo:');
+    var fullName = stdin.readLineSync()!;
+
+    var userInfo = {
+      'Teléfono': phoneNumber,
+      'Correo': email,
+      'Nombre Completo': fullName,
+    };
+
+    raffleNumbers[number] = fullName;
+    userEntries[number] = userInfo;
+
+    print('¡Felicidades, has seleccionado el número $number!');
+  }
+}
+
+void main() {
+  var app = RaffleApp();
+  app.start();
+}
